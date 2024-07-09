@@ -12,7 +12,7 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $movies = Movie::all();
+        $movies = Movie::with('categories')->get();
         return view('admin.movies.index', compact('movies'));
     }
 
@@ -21,7 +21,8 @@ class MovieController extends Controller
      */
     public function create()
     {
-        return view('admin.movies.create');
+        $categories = \App\Models\Category::all();
+        return view('admin.movies.create', compact('categories'));
     }
 
     /**
@@ -34,21 +35,30 @@ class MovieController extends Controller
             'slug' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
-            'duration' => 'required|string|max:50',
+            'duration' => 'required|integer|min:0',
             'release_date' => 'required|date',
+            'category_ids' => 'required|array',
+            'category_ids.*' => 'exists:categories,id',
         ]);
-//        dd($request->file('thumbnail')->store('public/movies'));
+
+        $hours = floor($request->duration / 60);
+        $minutes = $request->duration % 60;
+        $duration = sprintf('%02d:%02d:00', $hours, $minutes);
+
         $movie = new Movie();
         $thumbnailName = time() . '.' . $request->thumbnail->extension();
         $request->thumbnail->storeAs('public/movies', $thumbnailName);
         $movie->title = $request->title;
         $movie->slug = $request->slug;
         $movie->description = $request->description;
-        $movie->duration = $request->duration;
+        $movie->duration = $duration;
         $movie->release_date = $request->release_date;
         $movie->thumbnail = $thumbnailName;
-        $movie->status = $request->status;
+        if($request->has('status')) {
+            $movie->status = $request->status;
+        }
         $movie->save();
+        $movie->categories()->attach($request->category_ids);
         return redirect()->route('movies.index')->with('success', 'Movie created successfully!');
     }
 
@@ -57,7 +67,8 @@ class MovieController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $movie = Movie::with('categories')->find($id);
+        return view('admin.movies.show', compact('movie'));
     }
 
     /**
@@ -81,6 +92,8 @@ class MovieController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $movie = Movie::find($id);
+        $movie->delete();
+        return redirect()->route('movies.index')->with('success', 'Movie deleted successfully!');
     }
 }

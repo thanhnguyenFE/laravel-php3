@@ -21,6 +21,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
+
         return view('admin.categories.create');
     }
 
@@ -45,7 +46,8 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $category = \App\Models\Category::find($id);
+        return view('admin.categories.show', compact('category'));
     }
 
     /**
@@ -69,6 +71,8 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = Category::find($id);
+        $category->delete();
+        return redirect()->route('categories.index')->with('success', 'Category deleted successfully!');
     }
 }

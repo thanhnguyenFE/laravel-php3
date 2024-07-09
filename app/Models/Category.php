@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
@@ -21,4 +22,8 @@ class Category extends Model
     protected $casts = [
         'status' => 'boolean',
     ];
+
+    public function movies(): BelongsToMany{
+        return $this->belongsToMany(Movie::class, 'category_movies');
+    }
 }

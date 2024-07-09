@@ -49,13 +49,23 @@
                         <div class="mb-3">
                             <label class="form-label" for="basic-default-duration">Duration</label>
                             <input
-                                type="text"
+                                type="number"
                                 id="basic-default-duration"
                                 class="form-control"
                                 name="duration"
-                                placeholder="Đơn vị phút"
+                                placeholder="minutes"
                             />
                         </div>
+
+                        <div class="mb-3">
+                            <label for="category_ids" class="form-label">Categories</label>
+                            <select class="form-control" id="category_ids" name="category_ids[]" multiple required>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div class="mb-3">
                           <label class="form-label d-block" for="basic-default-status">Status</label>
                             <div class="form-check form-check-inline">
@@ -64,7 +74,8 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Send</button>
+                        <button type="submit" class="btn btn-outline-primary mr-3">Send</button>
+                        <a type="button" class="btn btn-outline-warning" href="{{route('movies.index')}}">Cancel</a>
                     </form>
                 </div>
             </div>

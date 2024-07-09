@@ -36,7 +36,8 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Send</button>
+                        <button type="submit" class="btn btn-outline-primary mr-3">Send</button>
+                        <a type="button" class="btn btn-outline-warning" href="{{route('categories.index')}}">Cancel</a>
                     </form>
                 </div>
             </div>

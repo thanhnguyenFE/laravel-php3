@@ -3,17 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Room;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class RoomController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categories = \App\Models\Category::all();
-        return view('admin.categories.index', compact('categories'));
+        $rooms = Room::all();
+        return view('admin.rooms.index', compact('rooms'));
     }
 
     /**
@@ -21,7 +22,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        return view('admin.rooms.create');
     }
 
     /**
@@ -29,15 +30,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request->all());
         $validate = $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'status' => 'string',
         ]);
-        Category::create($validate);
-        return redirect()->route('categories.index')->with('success', 'Category created successfully!');
+        Room::create($validate);
+        return redirect()->route('rooms.index')->with('success', 'Room created successfully!');
     }
 
     /**
@@ -45,8 +45,8 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = \App\Models\Category::find($id);
-        return view('admin.categories.show', compact('category'));
+        $room = Room::find($id);
+        return view('admin.rooms.show', compact('room'));
     }
 
     /**
@@ -54,8 +54,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $category = Category::find($id);
-        return view('admin.categories.update', compact('category'));
+        $room = Room::find($id);
+        return view('admin.rooms.update', compact('room'));
     }
 
     /**
@@ -69,14 +69,9 @@ class CategoryController extends Controller
             'description' => 'required|string|max:255',
             'status' => 'string',
         ]);
-        $category = Category::find($id);
-        if ($request->has('status')) {
-            $validate['status'] = $request->status;
-        }else{
-            $validate['status'] = 0;
-        }
-        $category->update($validate);
-        return redirect()->route('categories.index')->with('success', 'Category updated successfully!');
+        $room = Room::find($id);
+        $room->update($validate);
+        return redirect()->route('rooms.index')->with('success', 'Room updated successfully!');
     }
 
     /**
@@ -84,8 +79,8 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $category = Category::find($id);
-        $category->delete();
-        return redirect()->route('categories.index')->with('success', 'Category deleted successfully!');
+        $room = Room::find($id);
+        $room->delete();
+        return redirect()->route('rooms.index')->with('success', 'Room deleted successfully!');
     }
 }

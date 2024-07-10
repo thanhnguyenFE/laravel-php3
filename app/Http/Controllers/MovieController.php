@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,8 @@ class MovieController extends Controller
      */
     public function create()
     {
-        $categories = \App\Models\Category::all();
+        $category = new Category();
+        $categories = $category->getCategoryActive();
         return view('admin.movies.create', compact('categories'));
     }
 
@@ -76,7 +78,12 @@ class MovieController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $movie = Movie::find($id);
+        $category = new Category();
+        $categories = $category->getCategoryActive();
+        list($hours, $minutes, $seconds) = explode(':', $movie->duration);
+        $movie->duration = $hours * 60 + $minutes;
+        return view('admin.movies.update', compact('movie', 'categories'));
     }
 
     /**
@@ -84,7 +91,41 @@ class MovieController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'slug' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+            'duration' => 'required|integer|min:0',
+            'release_date' => 'required|date',
+            'category_ids' => 'required|array',
+            'category_ids.*' => 'exists:categories,id',
+        ]);
+
+        $hours = floor($request->duration / 60);
+        $minutes = $request->duration % 60;
+        $duration = sprintf('%02d:%02d:00', $hours, $minutes);
+
+        $movie = Movie::find($id);
+        if($request->has('thumbnail')) {
+            $thumbnailName = time() . '.' . $request->thumbnail->extension();
+            $request->thumbnail->storeAs('public/movies', $thumbnailName);
+            $movie->thumbnail = $thumbnailName;
+
+        }
+        $movie->title = $request->title;
+        $movie->slug = $request->slug;
+        $movie->description = $request->description;
+        $movie->duration = $duration;
+        $movie->release_date = $request->release_date;
+        if($request->has('status')) {
+            $movie->status = $request->status;
+        }else{
+            $movie->status = 0;
+        }
+        $movie->save();
+        $movie->categories()->sync($request->category_ids);
+        return redirect()->route('movies.index')->with('success', 'Movie updated successfully!');
     }
 
     /**

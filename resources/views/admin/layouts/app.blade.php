@@ -46,6 +46,8 @@
 
     <!--Tailwind CSS -->
     @vite('resources/css/app.css')
+
+    @yield('styles')
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{asset('js/config.js')}}"></script>
@@ -144,10 +146,23 @@
                 <li class="menu-item">
                     <a href="{{route('categories.index')}}" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                        <div data-i18n="Movies">Category</div>
+                        <div data-i18n="Categories">Categories</div>
                     </a>
                 </li>
 
+                <li class="menu-item">
+                    <a href="{{route('rooms.index')}}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <div data-i18n="Rooms">Rooms</div>
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a href="{{route('schedules.index')}}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <div data-i18n="Schedules">Schedules</div>
+                    </a>
+                </li>
 
                 <!-- Layouts -->
                 <li class="menu-item">

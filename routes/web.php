@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,4 +21,10 @@ Route::get('/', function () {
 Route::group(['prefix' => 'admin'], function () {
     Route::resource('movies', \App\Http\Controllers\MovieController::class);
     Route::resource('categories', \App\Http\Controllers\CategoryController::class);
+    Route::resource('rooms', \App\Http\Controllers\RoomController::class);
+    Route::resource('schedules', \App\Http\Controllers\ScheduleController::class);
+    Route::get('/schedules/available-rooms', [ScheduleController::class, 'getAvailableRooms'])->name('schedules.availableRooms');
+//    Route::resource('tickets', \App\Http\Controllers\TicketController::class);
+//    Route::resource('orders', \App\Http\Controllers\OrderController::class);
+
 });

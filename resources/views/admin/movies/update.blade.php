@@ -7,24 +7,25 @@
         <div class="col-xl">
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Create Movie</h5>
+                    <h5 class="mb-0">Edit {{$movie->title}} movie</h5>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('movies.store') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('movies.update', $movie->id)}}" enctype="multipart/form-data">
+                        @method('PUT')
                         @csrf
                         <div class="mb-3">
-                            <label class="form-label" for="basic-default-title">Title</label>
-                            <input type="text" class="form-control" id="basic-default-title" placeholder="John Doe" name="title"/>
+                            <label class="form-label" for="basic-default-title" >Title</label>
+                            <input type="text" class="form-control" id="basic-default-title" placeholder="John Doe" name="title" value="{{$movie->title}}"/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="basic-default-slug">Slug</label>
-                            <input type="text" class="form-control" id="basic-default-slug" placeholder="john-doe" name="slug"/>
+                            <input type="text" class="form-control" id="basic-default-slug" placeholder="john-doe" name="slug" value="{{$movie->slug}}"/>
                         </div>
                         <div class="mb-3">
                             <label for="category_ids" class="form-label">Categories</label>
                             <select class="form-control" id="category_ids" name="category_ids[]" multiple required>
                                 @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    <option value="{{ $category->id }}" @if(in_array($category->id, $movie->categories->pluck('id')->toArray())) selected @endif>{{ $category->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -37,6 +38,7 @@
                                 class="form-control"
                                 name="thumbnail"
                             />
+                            <img src="{{asset('storage/movies/'.$movie->thumbnail)}}" alt="{{$movie->title}}" class="img-fluid rounded me-3 w-[200px] h-[200px] mt-4">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="basic-default-date">Release Date</label>
@@ -45,6 +47,7 @@
                                 id="basic-default-date"
                                 class="form-control"
                                 name="release_date"
+                                value="{{$movie->release_date}}"
                             />
                         </div>
                         <div class="mb-3">
@@ -55,6 +58,7 @@
                                 class="form-control"
                                 name="duration"
                                 placeholder="minutes"
+                                value="{{$movie->duration}}"
                             />
                         </div>
 
@@ -67,13 +71,13 @@
                                 placeholder="Hi, Do you have a moment to talk Joe?"
                                 rows="5"
                                 name="description"
-                            ></textarea>
+                            >{{$movie->description}}</textarea>
                         </div>
 
                         <div class="mb-3">
-                          <label class="form-label d-block" for="basic-default-status">Status</label>
+                            <label class="form-label d-block" for="basic-default-status">Status</label>
                             <div class="form-check form-check-inline">
-                                <input type="checkbox" class="form-check-input" id="status" value="1" name="status"/>
+                                <input type="checkbox" class="form-check-input" id="status" value="1" name="status" @if($movie->status==1) checked @endif/>
                                 <label class="form-check-label" for="status">Active</label>
                             </div>
                         </div>
@@ -97,5 +101,6 @@
                 bgColor: 'rgba(105, 108, 255, 0.16)',
             },
         })  // id
+        $("textarea").jqte();
     </script>
 @endsection

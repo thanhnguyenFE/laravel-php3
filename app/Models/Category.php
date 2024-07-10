@@ -26,4 +26,9 @@ class Category extends Model
     public function movies(): BelongsToMany{
         return $this->belongsToMany(Movie::class, 'category_movies');
     }
+
+    public function getCategoryActive()
+    {
+        return $this->where('status', 1)->get();
+    }
 }

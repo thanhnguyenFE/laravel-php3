@@ -30,7 +30,7 @@
                             />
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3" id="start-at-container">
                             <label class="form-label" for="basic-default-start-at">Start At</label>
                             <input
                                 type="time"
@@ -41,7 +41,7 @@
                             />
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3" id="end-at-container">
                             <label class="form-label" for="basic-default-end-at">End At</label>
                             <input
                                 type="time"
@@ -52,9 +52,9 @@
                             />
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3" id="available-rooms-container">
                             <label for="room_id" class="form-label">Rooms</label>
-                            <select class="form-control" id="room_id" name="room_id">
+                            <select class="form-control" id="room" name="room_id">
                                 @foreach($rooms as $room)
                                     <option value="{{ $room->id }}" @if($room->id == $schedule->room_id) selected @endif>{{ $room->name }}</option>
                                 @endforeach
@@ -69,7 +69,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-outline-primary mr-3">Send</button>
+                        <button type="submit" class="btn btn-outline-primary mr-3" id="input-submit">Send</button>
                         <a type="button" class="btn btn-outline-warning" href="{{route('schedules.index')}}">Cancel</a>
                     </form>
                 </div>
@@ -78,3 +78,56 @@
     </div>
 @endsection
 
+@section('scripts')
+    <script>
+        function callAvailableRooms(show_date, start_at, end_at, room_id = null) {
+            $.ajax({
+                url: '/admin/schedules/available-rooms',
+                type: 'GET',
+                data: { show_date: show_date,  start_at: start_at, end_at: end_at, room_id: room_id },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(data) {
+                    var rooms = $('#room');
+                    rooms.empty();
+                    if (data.length > 0) {
+                        $.each(data, function(index, room) {
+                            var selected = room.id == room_id ? 'selected' : '';
+                            rooms.append('<option value="' + room.id + '" ' + selected + '>' + room.name + '</option>');
+                        });
+                    } else {
+                        rooms.append('<option value="">No rooms available</option>');
+                    }
+                    $('#available-rooms-container').slideDown();
+                    $('#input-submit').prop('disabled', false);
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            callAvailableRooms($('#basic-default-date').val(), $('#basic-default-start-at').val(), $('#basic-default-end-at').val(), $('#room').val());
+            $('#basic-default-date, #basic-default-start-at, #basic-default-end-at').on('change', function() {
+                var show_date = $('#basic-default-date').val();
+                if (show_date) {
+                    $('#start-at-container').slideDown();
+                    $('#end-at-container').slideDown();
+                } else {
+                    $('#start-at-container').slideUp();
+                    $('#end-at-container').slideUp();
+                    $('#available-rooms-container').slideUp();
+                    $('#input-submit').prop('disabled', true);
+                }
+                var start_at = $('#basic-default-start-at').val();
+                var end_at = $('#basic-default-end-at').val();
+
+                if(start_at && end_at) {
+                    callAvailableRooms(show_date, start_at, end_at);
+                }
+            });
+        });
+    </script>
+@endsection

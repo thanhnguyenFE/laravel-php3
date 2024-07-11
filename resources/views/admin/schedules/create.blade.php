@@ -19,7 +19,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label" for="basic-default-date">Date</label>
+                            <label class="form-label" for="basic-default-date" >Date</label>
                             <input
                                 type="date"
                                 id="basic-default-date"
@@ -28,7 +28,7 @@
                             />
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3" id="start-at-container" style="display: none;">
                             <label class="form-label" for="basic-default-start-at">Start At</label>
                             <input
                                 type="time"
@@ -38,7 +38,7 @@
                             />
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3" id="end-at-container" style="display: none;">
                             <label class="form-label" for="basic-default-end-at">End At</label>
                             <input
                                 type="time"
@@ -48,13 +48,9 @@
                             />
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3" id="available-rooms-container" style="display: none;">
                             <label for="room" class="form-label">Rooms</label>
-                            <select class="form-control" id="room" name="room_id">
-{{--                                @foreach($rooms as $room)--}}
-{{--                                    <option value="{{ $room->id }}">{{ $room->name }}</option>--}}
-{{--                                @endforeach--}}
-                            </select>
+                            <select class="form-control" id="room" name="room_id"></select>
                         </div>
 
                         <div class="mb-3">
@@ -65,7 +61,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-outline-primary mr-3">Send</button>
+                        <button type="submit" class="btn btn-outline-primary mr-3" id="input-submit" disabled>Send</button>
                         <a type="button" class="btn btn-outline-warning" href="{{route('schedules.index')}}">Cancel</a>
                     </form>
                 </div>
@@ -78,27 +74,46 @@
     <script>
         $(document).ready(function() {
             $('#basic-default-date').on('change', function() {
-                var show_date = $(this).val();
-                console.log("show_date", show_date);
-                $.ajax({
-                    url: '/admin/schedules/available-rooms',
-                    type: 'GET',
-                    data: { show_date: show_date },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(data) {
-                        console.log('data', data)
-                        // var rooms = $('#room');
-                        // rooms.empty();
-                        // $.each(data, function(index, room) {
-                        //     rooms.append('<option value="' + room.id + '">' + room.name + '</option>');
-                        // });
-                    },
-                    error: function(xhr, status, error) {
-                        // console.error(xhr.responseText);
+                var show_date = $('#basic-default-date').val();
+                if (show_date) {
+                    $('#start-at-container').slideDown();
+                    $('#end-at-container').slideDown();
+                } else {
+                    $('#start-at-container').slideUp();
+                    $('#end-at-container').slideUp();
+                }
+                $('#basic-default-end-at, #basic-default-start-at').on('change', function() {
+                    var start_at = $('#basic-default-start-at').val();
+                    var end_at = $('#basic-default-end-at').val();
+                    if(start_at && end_at) {
+                        $.ajax({
+                            url: '/admin/schedules/available-rooms',
+                            type: 'GET',
+                            data: { show_date: show_date,  start_at: start_at, end_at: end_at },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function(data) {
+                                var rooms = $('#room');
+                                rooms.empty();
+                                if (data.length > 0) {
+                                    $.each(data, function(index, room) {
+                                        rooms.append('<option value="' + room.id + '">' + room.name + '</option>');
+                                    });
+                                } else {
+                                    rooms.append('<option value="">No rooms available</option>');
+                                }
+                                $('#available-rooms-container').slideDown();
+                                $('#input-submit').prop('disabled', false);
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(xhr.responseText);
+                            }
+                        });
                     }
-                });
+
+                })
+
             });
         });
     </script>

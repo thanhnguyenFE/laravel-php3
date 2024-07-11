@@ -37,6 +37,10 @@ class Movie extends Model
         return $this->hasMany(Schedule::class, 'movie_id');
     }
 
+    public function comments(): hasMany{
+        return $this->hasMany(Comment::class, 'movie_id');
+    }
+
     public function getMoviesActive()
     {
         return $this->where('status', 1)->get();

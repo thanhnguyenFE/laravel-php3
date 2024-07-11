@@ -70,7 +70,8 @@ class MovieController extends Controller
     public function show(string $id)
     {
         $movie = Movie::with('categories')->find($id);
-        return view('admin.movies.show', compact('movie'));
+        $comments = $movie->comments;
+        return view('admin.movies.show', compact('movie', 'comments'));
     }
 
     /**

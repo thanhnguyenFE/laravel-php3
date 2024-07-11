@@ -6,6 +6,7 @@ use App\Models\Movie;
 use App\Models\Room;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ScheduleController extends Controller
 {
@@ -32,18 +33,27 @@ class ScheduleController extends Controller
 
     public function getAvailableRooms(Request $request)
     {
-        return response()->json(['data' => 'hello']);
-//        $schedule = new Schedule();
-//        $room = new Room();
-//        try {
-//            $show_date = $request->get('show_date');
-//            dd($show_date);
-//            $occupied_rooms = $schedule->newQuery()->where('date', $show_date)->pluck('room_id');
-//            $available_rooms = $room->newQuery()->whereNotIn('id', $occupied_rooms)->get();
-//            return response()->json($available_rooms);
-//        } catch (\Exception $e) {
-//            return response()->json(['error' => $e->getMessage()], 500);
-//        }
+        try {
+            $show_date = $request->input('show_date');
+            $start_time = $request->input('start_at');
+            $end_time = $request->input('end_at');
+            $room_id = $request->input('room_id');
+            $occupied_rooms_query= Schedule::where('date', $show_date)
+                ->where(function($query) use ($start_time, $end_time) {
+                    $query->where(function($q) use ($start_time, $end_time) {
+                        $q->where('start_at', '<', $end_time)
+                            ->where('end_at', '>', $start_time);
+                    });
+                });
+            if($room_id){
+                $occupied_rooms_query->where('room_id', '!=', $room_id);
+            };
+            $occupied_rooms= $occupied_rooms_query->pluck('room_id');
+            $available_rooms = Room::whereNotIn('id', $occupied_rooms)->get();
+            return response()->json($available_rooms);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -98,13 +108,16 @@ class ScheduleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'movie_id' => 'required',
             'room_id' => 'required',
-            'date' => 'required',
-            'start_at' => 'required',
-            'end_at' => 'required',
+            'date' => 'required|date_format:Y-m-d',
+            'start_at' => 'required|before:end_at',
+            'end_at' => 'required|after:start_at',
         ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 200);
+        }
         $schedule = Schedule::find($id);
         $schedule->movie_id = $request->movie_id;
         $schedule->room_id = $request->room_id;

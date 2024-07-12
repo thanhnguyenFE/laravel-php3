@@ -57,6 +57,26 @@
 <!-- Layout wrapper -->
 <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
+        @if(session('success'))
+            <div
+                class="bs-toast toast fade toast-placement-ex show bg-info position-fixed right-0 top-0 me-3 mt-3"
+                role="alert"
+                id="alertToast"
+                aria-live="assertive"
+                aria-atomic="true"
+            >
+                <div class="toast-header">
+                    <i class="bx bx-bell me-2"></i>
+                    <div class="me-auto fw-semibold">Alert</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {{ session('success') }}
+                </div>
+            </div>
+        @endif
+
+
         <!-- Menu -->
 
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
@@ -164,12 +184,6 @@
                     </a>
                 </li>
 
-                <li class="menu-item">
-                    <a href="{{route('comments.index')}}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                        <div data-i18n="Comments">Comments</div>
-                    </a>
-                </li>
 
                 <!-- Layouts -->
                 <li class="menu-item">
@@ -410,6 +424,17 @@
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var successAlert = document.getElementById('alertToast');
+        if (successAlert) {
+            setTimeout(function() {
+                successAlert.style.display = 'none';
+            }, 2000); // 2000 milliseconds = 2 seconds
+        }
+    });
+</script>
 
 @yield('scripts')
 

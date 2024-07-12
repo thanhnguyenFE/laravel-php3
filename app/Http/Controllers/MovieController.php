@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 
@@ -138,4 +139,6 @@ class MovieController extends Controller
         $movie->delete();
         return redirect()->route('movies.index')->with('success', 'Movie deleted successfully!');
     }
+
+
 }

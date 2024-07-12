@@ -24,7 +24,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('rooms', \App\Http\Controllers\RoomController::class);
     Route::get('/schedules/available-rooms', [ScheduleController::class, 'getAvailableRooms']);
     Route::resource('schedules', ScheduleController::class);
-    Route::resource('/comments', \App\Http\Controllers\CommentController::class);
+    Route::get('/comments/show', [\App\Http\Controllers\CommentController::class, 'showDetailComment']);
+    Route::delete('/comments/{id}', 'App\Http\Controllers\CommentController@destroy')->name('comments.destroy');
+    Route::match(['put', 'patch'], '/comments/{id}/update', 'App\Http\Controllers\CommentController@update');
 //    Route::resource('tickets', \App\Http\Controllers\TicketController::class);
 //    Route::resource('orders', \App\Http\Controllers\OrderController::class);
 

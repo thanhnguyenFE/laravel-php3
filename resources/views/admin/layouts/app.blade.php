@@ -184,6 +184,20 @@
                     </a>
                 </li>
 
+                <li class="menu-item">
+                    <a href="{{route('tickets.index')}}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <div data-i18n="Tickets">Tickets</div>
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a href="{{route('orders.index')}}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <div data-i18n="Orders">Orders</div>
+                    </a>
+                </li>
+
 
                 <!-- Layouts -->
                 <li class="menu-item">

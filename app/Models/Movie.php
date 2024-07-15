@@ -45,4 +45,9 @@ class Movie extends Model
     {
         return $this->where('status', 1)->get();
     }
+
+    public function tickets(): hasMany
+    {
+        return $this->hasMany(Ticket::class, 'movie_id');
+    }
 }

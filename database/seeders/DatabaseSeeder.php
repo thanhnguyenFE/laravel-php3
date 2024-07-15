@@ -18,5 +18,13 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        $this->call([
+            UserSeeder::class,
+            CategorySeeder::class,
+            RoomSeeder::class,
+            MovieSeeder::class,
+            CommentSeeder::class,
+            CategoryMovieSeeder::class, // Thêm dòng này
+        ]);
     }
 }

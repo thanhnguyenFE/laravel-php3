@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Schedule extends Model
@@ -14,12 +15,14 @@ class Schedule extends Model
 
     public function movie(){
         return $this->belongsTo(Movie::class, 'movie_id');
-
     }
 
     public function room(){
         return $this->belongsTo(Room::class, 'room_id');
+    }
 
+    public function tickets(): hasMany{
+        return $this->hasMany(Ticket::class, 'schedule_id');
     }
 
     public function getScheduleActive()

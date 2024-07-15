@@ -27,8 +27,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/comments/show', [\App\Http\Controllers\CommentController::class, 'showDetailComment']);
     Route::delete('/comments/{id}', 'App\Http\Controllers\CommentController@destroy')->name('comments.destroy');
     Route::match(['put', 'patch'], '/comments/{id}/update', 'App\Http\Controllers\CommentController@update');
-//    Route::resource('tickets', \App\Http\Controllers\TicketController::class);
-//    Route::resource('orders', \App\Http\Controllers\OrderController::class);
+    Route::get('/tickets/show', [\App\Http\Controllers\TicketController::class, 'showDetailTicket']);
+    Route::resource('tickets', \App\Http\Controllers\TicketController::class);
+    Route::resource('orders', \App\Http\Controllers\OrderController::class);
 
 });
 

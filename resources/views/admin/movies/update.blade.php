@@ -38,7 +38,7 @@
                                 class="form-control"
                                 name="thumbnail"
                             />
-                            <img src="{{asset('storage/movies/'.$movie->thumbnail)}}" alt="{{$movie->title}}" class="img-fluid rounded me-3 w-[200px] h-[200px] mt-4">
+                            <img src="{{filter_var($movie->thumbnail, FILTER_VALIDATE_URL) ? $movie->thumbnail : asset('storage/movies/'.$movie->thumbnail)}}" alt="{{$movie->title}}" class="img-fluid rounded me-3 w-[200px] h-[200px] mt-4">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="basic-default-date">Release Date</label>

@@ -21,7 +21,7 @@
                     <tbody>
                     <tr>
                         <td>Thumbnail</td>
-                        <td><img src="{{asset('storage/movies/'.$movie->thumbnail)}}" alt="{{$movie->title}}" class="img-fluid rounded me-3 w-[100px] h-[100px]"></td>
+                        <td><img src="{{filter_var($movie->thumbnail, FILTER_VALIDATE_URL) ? $movie->thumbnail : asset('storage/movies/'.$movie->thumbnail)}}" alt="{{$movie->title}}" class="img-fluid rounded me-3 w-[100px] h-[100px]"></td>
                     </tr>
                     <tr>
                         <td>Title</td>

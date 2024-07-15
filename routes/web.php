@@ -29,7 +29,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::match(['put', 'patch'], '/comments/{id}/update', 'App\Http\Controllers\CommentController@update');
     Route::get('/tickets/show', [\App\Http\Controllers\TicketController::class, 'showDetailTicket']);
     Route::resource('tickets', \App\Http\Controllers\TicketController::class);
-    Route::resource('orders', \App\Http\Controllers\OrderController::class);
 
 });
 

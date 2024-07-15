@@ -22,7 +22,7 @@
                     <tbody>
                     @foreach($movies as $movie)
                         <tr class="cursor-pointer">
-                            <td><img src="{{asset('storage/movies/'.$movie->thumbnail)}}" alt="{{$movie->title}}" class="img-fluid rounded me-3 w-[100px] h-[100px]"></td>
+                            <td><img src="{{ filter_var($movie->thumbnail, FILTER_VALIDATE_URL) ? $movie->thumbnail : asset('storage/movies/'.$movie->thumbnail)}}" alt="{{$movie->title}}" class="img-fluid rounded me-3 w-[100px] h-[100px]"></td>
                             <td>{{$movie->title}}</td>
                             <td>
                                 {{$movie->slug}}

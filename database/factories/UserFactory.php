@@ -22,7 +22,7 @@ class UserFactory extends Factory
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
-            'password' => Hash::make('password'), // Mật khẩu mặc định
+            'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
             'phone' => $this->faker->phoneNumber,
             'avatar' => $this->faker->imageUrl(100, 100, 'people', true, 'Faker'),

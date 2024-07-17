@@ -191,6 +191,26 @@
                     </a>
                 </li>
 
+                <li class="menu-item">
+                    <a href="{{route('banners.index')}}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <div data-i18n="Banners">Banner Marketing</div>
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a href="{{route('roles.index')}}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <div data-i18n="Roles">Roles and Permissions</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{route('users.index')}}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <div data-i18n="Users">Users</div>
+                    </a>
+                </li>
+
                 <!-- Layouts -->
                 <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">

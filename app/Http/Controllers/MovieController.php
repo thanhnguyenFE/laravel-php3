@@ -109,7 +109,7 @@ class MovieController extends Controller
         $duration = sprintf('%02d:%02d:00', $hours, $minutes);
 
         $movie = Movie::find($id);
-        if($request->has('thumbnail')) {
+        if($request->hasFile('thumbnail')) {
             $thumbnailName = time() . '.' . $request->thumbnail->extension();
             $request->thumbnail->storeAs('public/movies', $thumbnailName);
             $movie->thumbnail = $thumbnailName;

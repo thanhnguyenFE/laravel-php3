@@ -15,8 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('admin.index');
-});
+    return view('client.index');
+})->name('client.home');
+Route::get('/lich-chieu', function () {
+    return view('client.schedule');
+})->name('client.schedule');
+Route::get('/lich-chieu/detail', function () {
+    return view('client.schedule_detail');
+})->name('client.schedule.detail');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::resource('movies', \App\Http\Controllers\MovieController::class);
@@ -29,6 +35,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::match(['put', 'patch'], '/comments/{id}/update', 'App\Http\Controllers\CommentController@update');
     Route::get('/tickets/show', [\App\Http\Controllers\TicketController::class, 'showDetailTicket']);
     Route::resource('tickets', \App\Http\Controllers\TicketController::class);
-
+    Route::get('/banners/show', [\App\Http\Controllers\BannerController::class, 'showDetailBanner']);
+    Route::resource('banners', \App\Http\Controllers\BannerController::class);
+    Route::resource('users', \App\Http\Controllers\UserController::class);
+    Route::get('/roles/show', [\App\Http\Controllers\RoleController::class, 'showDetailRole']);
+    Route::resource('roles', \App\Http\Controllers\RoleController::class);
 });
+
+
 

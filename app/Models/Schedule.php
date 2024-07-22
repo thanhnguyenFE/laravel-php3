@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use function App\Helpers\formatDate;
 
 class Schedule extends Model
 {
@@ -25,9 +26,30 @@ class Schedule extends Model
         return $this->hasMany(Ticket::class, 'schedule_id');
     }
 
-    public function getScheduleActive()
+    public function queryScheduleActive()
     {
-        return $this->where('status', 1)->get();
+        return $this->where('status', 1);
+    }
+
+    public function formatDate($date)
+    {
+        return \Carbon\Carbon::parse($date)->format('d-m-Y');
+    }
+
+
+    public function getDateSchedule()
+    {
+        $dates = $this->queryScheduleActive()->pluck('date')->unique();
+        return $dates->map(function ($date) {
+            return $this->formatDate($date);
+        });
+    }
+
+    public function getScheduleByDate($date)
+    {
+        return $this->where('date', formatDate($date, 'Y-m-d'))
+            ->distinct()
+            ->pluck('movie_id');
     }
 
 

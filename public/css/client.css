@@ -1,0 +1,7 @@
+.seat:checked{
+    background-color: #007bff;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}

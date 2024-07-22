@@ -65,9 +65,9 @@
                                     <a class="text-sm xl:text-base underline">Xem tất cả</a>
                                 </div>
                                 <div class="mt-6 grid gap-7 grid-cols-1 xl:grid-cols-5">
-                                    <div class="cursor-pointer shadow-lg" href="{{route('client.schedule.detail')}}">
+                                    <div class="cursor-pointer shadow-lg" >
                                         <div class="relative w-full h-[290px] overflow-hidden rounded-xl shadow-lg">
-                                            <a href="{{route('client.schedule.detail')}}">
+                                            <a>
                                                 <img class="object-cover object-center rounded-xl hover:scale-110 transition duration-500 h-full" src="https://chieuphimquocgia.com.vn/_next/image?url=https%3A%2F%2Fapi.chieuphimquocgia.com.vn%2FContent%2FImages%2F0017673_0.jpg&w=256&q=75" />
                                             </a>
                                         </div>

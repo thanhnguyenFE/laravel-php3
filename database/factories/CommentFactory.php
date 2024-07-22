@@ -21,8 +21,8 @@ class CommentFactory extends Factory
             'movie_id' => \App\Models\Movie::factory(),
             'content' => $this->faker->paragraph,
             'date' => $this->faker->dateTimeThisYear,
-            'rating' => $this->faker->numberBetween(1, 5), // Giả sử rating là từ 1 đến 5
-            'status' => $this->faker->randomElement([0, 1]), // random status 0 or 1
+            'rating' => $this->faker->numberBetween(1, 5),
+            'status' => $this->faker->randomElement([0, 1]),
         ];
     }
 }

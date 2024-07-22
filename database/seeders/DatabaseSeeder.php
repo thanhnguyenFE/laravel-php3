@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             RoomSeeder::class,
             MovieSeeder::class,
             CommentSeeder::class,
-            CategoryMovieSeeder::class, // Thêm dòng này
+            CategoryMovieSeeder::class,
         ]);
     }
 }

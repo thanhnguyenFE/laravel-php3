@@ -52,12 +52,11 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{asset('js/config.js')}}"></script>
 </head>
-
 <body>
 <!-- Layout wrapper -->
 <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
-        @if(session('success'))
+            @if(session('success'))
             <div
                 class="bs-toast toast fade toast-placement-ex show bg-info position-fixed right-0 top-0 me-3 mt-3"
                 role="alert"
@@ -75,7 +74,6 @@
                 </div>
             </div>
         @endif
-
 
         <!-- Menu -->
 

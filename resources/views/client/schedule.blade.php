@@ -44,7 +44,6 @@
                                        {{$item['start_at']}}
                                     </a>
                                 @endforeach
-
                             </div>
                         </div>
                     </div>

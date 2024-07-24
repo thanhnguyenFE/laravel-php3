@@ -99,20 +99,26 @@
                     <div>
                         <div class="mb-4 text-center font-bold text-lg">Phòng chiếu số 5</div>
                         <div class="space-y-1 -mx-4">
-                            @for($i=1; $i<=11; $i++)
+                            @for($i=1; $i<=6; $i++)
                                 <div class="grid md:flex gap-1 items-center justify-center">
-                                    @for($j=1; $j<=18; $j++)
+                                    @for($j=1; $j<=13; $j++)
                                         <input type="checkbox" class="seat rounded-[2px] sm:rounded-sm xl:rounded-[8px] flex items-center justify-center md:h-6 lg:h-10 bg-gray-700" />
                                     @endfor
                                 </div>
-
                             @endfor
                         </div>
                     </div>
                     <div class="flex items-center justify-center gap-4 xl:gap-8 mt-8 flex-wrap text-sm md:text-base">
-                        <div class="flex gap-2 items-center">
-                            <div class="aspect-square rounded-[2px] sm:rounded-sm xl:rounded-[8px] flex items-center justify-center md:h-6 lg:h-10 bg-gray-700">Ghế chưa được đặt</div>
-                            <div class="aspect-square rounded-[2px] sm:rounded-sm xl:rounded-[8px] flex items-center justify-center md:h-6 lg:h-10 bg-[#ff3e1d] ">Ghế đang được chọn</div>
+                        <div class="flex items-center gap-4">
+                            <div class="flex flex-col items-center">
+                                <div class="aspect-square rounded-[2px] sm:rounded-sm xl:rounded-[8px] flex items-center justify-center md:h-6 lg:h-10 bg-gray-700"></div>
+                                <p>Ghế chưa được đặt</p>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="aspect-square rounded-[2px] sm:rounded-sm xl:rounded-[8px] flex items-center justify-center md:h-6 lg:h-10 bg-[#ff3e1d] "></div>
+                                <p>Ghế đang chọn</p>
+                            </div>
+
                         </div>
                     </div>
                 </div>

@@ -140,39 +140,55 @@
                             <tr>
                                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-6">Ngày giao dịch</th>
                                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-6">Tên phim</th>
-                                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-6">Số ghế</th>
+                                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-6">Ngày chiếu</th>
+                                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-6">Giờ chiếu</th>
                                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-6">Phòng</th>
+                                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-6">Số vé</th>
                                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-6">Tổng tiền</th>
                             </tr>
                             </thead>
                             <tbody>
+                            @foreach($tickets as $ticket)
                             <tr>
                                 <td class="relative py-4 pl-4 pr-3 text-sm sm:pl-6">
                                     <div class="font-medium text-white">
-
+                                        {{$ticket->date}}
                                     </div>
                                 </td>
                                 <td class="relative py-4 pl-4 pr-3 text-sm sm:pl-6">
                                     <div class="font-medium text-white">
 
+                                        {{$ticket->schedule->movie->title}}
                                     </div>
                                 </td>
                                 <td class="relative py-4 pl-4 pr-3 text-sm sm:pl-6">
                                     <div class="font-medium text-white">
-
+                                        {{$ticket->schedule->date}}
                                     </div>
                                 </td>
                                 <td class="relative py-4 pl-4 pr-3 text-sm sm:pl-6">
                                     <div class="font-medium text-white">
+                                        {{$ticket->schedule->start_at}}
+                                    </div>
+                                </td>
 
+                                <td class="relative py-4 pl-4 pr-3 text-sm sm:pl-6">
+                                    <div class="font-medium text-white">
+                                        {{$ticket->schedule->room->name}}
                                     </div>
                                 </td>
                                 <td class="relative py-4 pl-4 pr-3 text-sm sm:pl-6">
                                     <div class="font-medium text-white">
-
+                                        {{count(json_decode($ticket->seats))}}
+                                    </div>
+                                </td>
+                                <td class="relative py-4 pl-4 pr-3 text-sm sm:pl-6">
+                                    <div class="font-medium text-white">
+                                        {{$ticket->total_price}}
                                     </div>
                                 </td>
                             </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

@@ -99,10 +99,25 @@
                     <div>
                         <div class="mb-4 text-center font-bold text-lg">Phòng chiếu số 5</div>
                         <div class="space-y-1 -mx-4">
-                            @for($i=1; $i<=6; $i++)
-                                <div class="grid md:flex gap-1 items-center justify-center">
+                            @php
+                                $rows = ['A', 'B', 'C', 'D', 'E', 'F'];
+                                $length = count($rows);
+                             @endphp
+                            @for($i=0; $i<$length; $i++)
+                                <div class="grid md:flex gap-1 items-center justify-center ">
                                     @for($j=1; $j<=13; $j++)
-                                        <input type="checkbox" class="seat rounded-[2px] sm:rounded-sm xl:rounded-[8px] flex items-center justify-center md:h-6 lg:h-10 bg-gray-700" />
+                                        @php
+                                            $seatId = $rows[$i].$j;
+                                            $isBooked = in_array($seatId, $bookedSeats);
+                                         @endphp
+                                        <div class="relative">
+                                            <input type="checkbox" id="seat-{{$rows[$i].$j}}" class="text-white seat rounded-[2px] sm:rounded-sm xl:rounded-[8px] flex items-center justify-center md:h-6 lg:h-10 bg-gray-700" value="{{$rows[$i].$j}}" {{$isBooked ? 'disabled' : ''}}/>
+                                            @if($isBooked)
+                                                <i class='bx bx-x text-3xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'></i>
+                                            @else
+                                                <label for="seat-{{$rows[$i].$j}}" class="cursor-pointer absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">{{$rows[$i].$j}}</label>
+                                            @endif
+                                        </div>
                                     @endfor
                                 </div>
                             @endfor
@@ -121,9 +136,62 @@
 
                         </div>
                     </div>
+                    <div class="flex items-center justify-between w-full mt-8 flex-wrap gap-y-4">
+                        <div>
+                            <p>Ghế đã chọn: <span id="selected-seats" class="font-semibold"></span></p>
+                            <p>Tổng tiền: <span id="total-price" class="font-semibold"></span></p>
+                        </div>
+                        <div class="flex items-center justify-center gap-2 w-full xl:w-auto">
+                            <a class="inline-flex items-center justify-center rounded-full text-sm font-medium  transition-colors  border border-input bg-transparent hover:bg-accent hover:text-accent-foreground h-10 px-8 py-2" href="{{url()->previous()}}">Quay lại</a>
+                            <button id="pay-button" class="inline-flex items-center justify-center rounded-full text-sm font-medium bg-danger text-destructive-foreground h-10 px-8 py-2 hover:scale-105 transition duration-300 disabled:opacity-50" disabled>Thanh toán</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-
         @endif
+@endsection
+@section('script')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const seats = document.querySelectorAll('.seat');
+        const selectedSeatsSpan = document.getElementById('selected-seats');
+        const totalPriceSpan = document.getElementById('total-price');
+        const payButton = document.getElementById('pay-button');
+        const scheduleId = <?php echo $schedule->id; ?>;
+        let selectedSeats = [];
+        let seatPrice = 100000;
 
+        seats.forEach(seat => {
+            seat.addEventListener('change', function () {
+                const seatValue = this.value;
+
+                if (this.checked) {
+                    selectedSeats.push(seatValue);
+                } else {
+                    selectedSeats = selectedSeats.filter(seat => seat !== seatValue);
+                }
+
+                updateSeatSelection();
+            });
+        });
+
+        function updateSeatSelection() {
+            selectedSeatsSpan.textContent = selectedSeats.join(', ');
+            totalPriceSpan.textContent = (selectedSeats.length * seatPrice).toLocaleString('vi-VN') + ' VND';
+
+            if (selectedSeats.length > 0) {
+                payButton.disabled = false;
+            } else {
+                payButton.disabled = true;
+            }
+        }
+        $('#pay-button').click(function () {
+            localStorage.setItem('selectedSeats', JSON.stringify(selectedSeats));
+            localStorage.setItem('seatPrice', totalPriceSpan.textContent);
+            localStorage.setItem('scheduleId', scheduleId);
+            window.location.href = '/payment';
+        })
+    });
+
+</script>
 @endsection

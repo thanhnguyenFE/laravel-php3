@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Movie;
 use App\Models\Schedule;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 use function App\Helpers\formatDate;
 
@@ -35,8 +36,16 @@ class ScheduleController extends Controller
         $movie = Movie::where('slug', $slug)->first();
         if($id){
             $schedule = Schedule::where('id', $id)->first();
+            $bookedSeats = Ticket::where('schedule_id', $id)->pluck('seats')->toArray();
+            $bookedSeats = array_reduce($bookedSeats, function ($carry, $item) {
+                return array_merge($carry, json_decode($item, true));
+            }, []);
         }
-        return view('client.schedule_detail', compact('schedule', 'movie', 'id'));
+        else{
+            $schedule = null;
+            $bookedSeats = [];
+        }
+        return view('client.schedule_detail', compact('schedule', 'movie', 'id', 'bookedSeats'));
 
     }
 }

@@ -57,7 +57,7 @@ class User extends Authenticatable
         return $this->hasMany(Ticket::class, 'user_id');
     }
 
-    public function role():BelongsTo{
+    public function roles():BelongsTo{
         return $this->belongsTo(Role::class, 'role_id');
     }
 }

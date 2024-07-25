@@ -65,140 +65,25 @@
                                     <a class="text-sm xl:text-base underline">Xem tất cả</a>
                                 </div>
                                 <div class="mt-6 grid gap-7 grid-cols-1 xl:grid-cols-5">
-                                    <div class="cursor-pointer shadow-lg" >
-                                        <div class="relative w-full h-[290px] overflow-hidden rounded-xl shadow-lg">
-                                            <a>
-                                                <img class="object-cover object-center rounded-xl hover:scale-110 transition duration-500 h-full" src="https://chieuphimquocgia.com.vn/_next/image?url=https%3A%2F%2Fapi.chieuphimquocgia.com.vn%2FContent%2FImages%2F0017673_0.jpg&w=256&q=75" />
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <div class="flex flex-wrap items-center gap-x-5 text-[#5D6A81] text-sm mt-3">
-                                                <p>Hài, Tâm lí, Tình cảm</p>
-                                                <p>19/07/2024</p>
+                                    @foreach($movies as $movie)
+                                        <div class="cursor-pointer shadow-lg" >
+                                            <div class="relative w-full h-[290px] overflow-hidden rounded-xl shadow-lg">
+                                                <a href="{{route('client.schedule.detail', $movie->slug)}}">
+                                                    <img class="object-cover object-center rounded-xl hover:scale-110 transition duration-500 h-full"
+                                                         src="{{ filter_var($movie->thumbnail, FILTER_VALIDATE_URL) ? $movie->thumbnail : asset('storage/movies/'.$movie->thumbnail)}}"
+                                                         alt="{{$movie->title}}"
+                                                    />
+                                                </a>
                                             </div>
-                                            <p class="mt-2 text-sm xl:text-base font-bold">BÉ MA CỦA ANH-T16</p>
-                                        </div>
-                                    </div>
-                                    <div class="cursor-pointer shadow-lg">
-                                        <div class="relative w-full h-[290px] overflow-hidden rounded-xl shadow-lg">
-                                            <img class="object-cover object-center rounded-xl hover:scale-110 transition duration-500 h-full" src="https://chieuphimquocgia.com.vn/_next/image?url=https%3A%2F%2Fapi.chieuphimquocgia.com.vn%2FContent%2FImages%2F0017673_0.jpg&w=256&q=75" />
-                                        </div>
-                                        <div>
-                                            <div class="flex flex-wrap items-center gap-x-5 text-[#5D6A81] text-sm mt-3">
-                                                <p>Hài, Tâm lí, Tình cảm</p>
-                                                <p>19/07/2024</p>
+                                            <div>
+                                                <div class="flex flex-wrap items-center gap-x-5 text-[#5D6A81] text-sm mt-3">
+                                                    {{ $movie->categories->implode('name', ', ') }}
+                                                    <p>{{\App\Helpers\formatDate($movie->release_date)}}</p>
+                                                </div>
+                                                <p class="mt-2 text-sm xl:text-base font-bold">{{$movie->title}}</p>
                                             </div>
-                                            <p class="mt-2 text-sm xl:text-base font-bold">BÉ MA CỦA ANH-T16</p>
                                         </div>
-                                    </div>
-                                    <div class="cursor-pointer shadow-lg">
-                                        <div class="relative w-full h-[290px] overflow-hidden rounded-xl shadow-lg">
-                                            <img class="object-cover object-center rounded-xl hover:scale-110 transition duration-500 h-full" src="https://chieuphimquocgia.com.vn/_next/image?url=https%3A%2F%2Fapi.chieuphimquocgia.com.vn%2FContent%2FImages%2F0017673_0.jpg&w=256&q=75" />
-                                        </div>
-                                        <div>
-                                            <div class="flex flex-wrap items-center gap-x-5 text-[#5D6A81] text-sm mt-3">
-                                                <p>Hài, Tâm lí, Tình cảm</p>
-                                                <p>19/07/2024</p>
-                                            </div>
-                                            <p class="mt-2 text-sm xl:text-base font-bold">BÉ MA CỦA ANH-T16</p>
-                                        </div>
-                                    </div>
-                                    <div class="cursor-pointer shadow-lg">
-                                        <div class="relative w-full h-[290px] overflow-hidden rounded-xl shadow-lg">
-                                            <img class="object-cover object-center rounded-xl hover:scale-110 transition duration-500 h-full" src="https://chieuphimquocgia.com.vn/_next/image?url=https%3A%2F%2Fapi.chieuphimquocgia.com.vn%2FContent%2FImages%2F0017673_0.jpg&w=256&q=75" />
-                                        </div>
-                                        <div>
-                                            <div class="flex flex-wrap items-center gap-x-5 text-[#5D6A81] text-sm mt-3">
-                                                <p>Hài, Tâm lí, Tình cảm</p>
-                                                <p>19/07/2024</p>
-                                            </div>
-                                            <p class="mt-2 text-sm xl:text-base font-bold">BÉ MA CỦA ANH-T16</p>
-                                        </div>
-                                    </div>
-                                    <div class="cursor-pointer shadow-lg">
-                                        <div class="relative w-full h-[290px] overflow-hidden rounded-xl shadow-lg">
-                                            <img class="object-cover object-center rounded-xl hover:scale-110 transition duration-500 h-full" src="https://chieuphimquocgia.com.vn/_next/image?url=https%3A%2F%2Fapi.chieuphimquocgia.com.vn%2FContent%2FImages%2F0017673_0.jpg&w=256&q=75" />
-                                        </div>
-                                        <div>
-                                            <div class="flex flex-wrap items-center gap-x-5 text-[#5D6A81] text-sm mt-3">
-                                                <p>Hài, Tâm lí, Tình cảm</p>
-                                                <p>19/07/2024</p>
-                                            </div>
-                                            <p class="mt-2 text-sm xl:text-base font-bold">BÉ MA CỦA ANH-T16</p>
-                                        </div>
-                                    </div>
-                                    <div class="cursor-pointer shadow-lg">
-                                        <div class="relative w-full h-[290px] overflow-hidden rounded-xl shadow-lg">
-                                            <img class="object-cover object-center rounded-xl hover:scale-110 transition duration-500 h-full" src="https://chieuphimquocgia.com.vn/_next/image?url=https%3A%2F%2Fapi.chieuphimquocgia.com.vn%2FContent%2FImages%2F0017673_0.jpg&w=256&q=75" />
-                                        </div>
-                                        <div>
-                                            <div class="flex flex-wrap items-center gap-x-5 text-[#5D6A81] text-sm mt-3">
-                                                <p>Hài, Tâm lí, Tình cảm</p>
-                                                <p>19/07/2024</p>
-                                            </div>
-                                            <p class="mt-2 text-sm xl:text-base font-bold">BÉ MA CỦA ANH-T16</p>
-                                        </div>
-                                    </div>
-                                    <div class="cursor-pointer shadow-lg">
-                                        <div class="relative w-full h-[290px] overflow-hidden rounded-xl shadow-lg">
-                                            <img class="object-cover object-center rounded-xl hover:scale-110 transition duration-500 h-full" src="https://chieuphimquocgia.com.vn/_next/image?url=https%3A%2F%2Fapi.chieuphimquocgia.com.vn%2FContent%2FImages%2F0017673_0.jpg&w=256&q=75" />
-                                        </div>
-                                        <div>
-                                            <div class="flex flex-wrap items-center gap-x-5 text-[#5D6A81] text-sm mt-3">
-                                                <p>Hài, Tâm lí, Tình cảm</p>
-                                                <p>19/07/2024</p>
-                                            </div>
-                                            <p class="mt-2 text-sm xl:text-base font-bold">BÉ MA CỦA ANH-T16</p>
-                                        </div>
-                                    </div>
-                                    <div class="cursor-pointer shadow-lg">
-                                        <div class="relative w-full h-[290px] overflow-hidden rounded-xl shadow-lg">
-                                            <img class="object-cover object-center rounded-xl hover:scale-110 transition duration-500 h-full" src="https://chieuphimquocgia.com.vn/_next/image?url=https%3A%2F%2Fapi.chieuphimquocgia.com.vn%2FContent%2FImages%2F0017673_0.jpg&w=256&q=75" />
-                                        </div>
-                                        <div>
-                                            <div class="flex flex-wrap items-center gap-x-5 text-[#5D6A81] text-sm mt-3">
-                                                <p>Hài, Tâm lí, Tình cảm</p>
-                                                <p>19/07/2024</p>
-                                            </div>
-                                            <p class="mt-2 text-sm xl:text-base font-bold">BÉ MA CỦA ANH-T16</p>
-                                        </div>
-                                    </div>
-                                    <div class="cursor-pointer shadow-lg">
-                                        <div class="relative w-full h-[290px] overflow-hidden rounded-xl shadow-lg">
-                                            <img class="object-cover object-center rounded-xl hover:scale-110 transition duration-500 h-full" src="https://chieuphimquocgia.com.vn/_next/image?url=https%3A%2F%2Fapi.chieuphimquocgia.com.vn%2FContent%2FImages%2F0017673_0.jpg&w=256&q=75" />
-                                        </div>
-                                        <div>
-                                            <div class="flex flex-wrap items-center gap-x-5 text-[#5D6A81] text-sm mt-3">
-                                                <p>Hài, Tâm lí, Tình cảm</p>
-                                                <p>19/07/2024</p>
-                                            </div>
-                                            <p class="mt-2 text-sm xl:text-base font-bold">BÉ MA CỦA ANH-T16</p>
-                                        </div>
-                                    </div>
-                                    <div class="cursor-pointer shadow-lg">
-                                        <div class="relative w-full h-[290px] overflow-hidden rounded-xl shadow-lg">
-                                            <img class="object-cover object-center rounded-xl hover:scale-110 transition duration-500 h-full" src="https://chieuphimquocgia.com.vn/_next/image?url=https%3A%2F%2Fapi.chieuphimquocgia.com.vn%2FContent%2FImages%2F0017673_0.jpg&w=256&q=75" />
-                                        </div>
-                                        <div>
-                                            <div class="flex flex-wrap items-center gap-x-5 text-[#5D6A81] text-sm mt-3">
-                                                <p>Hài, Tâm lí, Tình cảm</p>
-                                                <p>19/07/2024</p>
-                                            </div>
-                                            <p class="mt-2 text-sm xl:text-base font-bold">BÉ MA CỦA ANH-T16</p>
-                                        </div>
-                                    </div>
-                                    <div class="cursor-pointer shadow-lg">
-                                        <div class="relative w-full h-[290px] overflow-hidden rounded-xl shadow-lg">
-                                            <img class="object-cover object-center rounded-xl hover:scale-110 transition duration-500 h-full" src="https://chieuphimquocgia.com.vn/_next/image?url=https%3A%2F%2Fapi.chieuphimquocgia.com.vn%2FContent%2FImages%2F0017673_0.jpg&w=256&q=75" />
-                                        </div>
-                                        <div>
-                                            <div class="flex flex-wrap items-center gap-x-5 text-[#5D6A81] text-sm mt-3">
-                                                <p>Hài, Tâm lí, Tình cảm</p>
-                                                <p>19/07/2024</p>
-                                            </div>
-                                            <p class="mt-2 text-sm xl:text-base font-bold">BÉ MA CỦA ANH-T16</p>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>

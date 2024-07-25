@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Schedule;
+use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -53,7 +55,9 @@ class AuthController extends Controller
     }
     public function profile()
     {
-        return view('client.profile');
+        $user = User::find(auth()->user()->id);
+        $tickets = Ticket::where('user_id', $user->id)->get();
+        return view('client.profile', compact('tickets'));
     }
 
     public function updateProfile(Request $request){

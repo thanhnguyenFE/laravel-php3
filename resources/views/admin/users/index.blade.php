@@ -28,7 +28,9 @@
                             </td>
                             <td>{{$user->email}}</td>
                             <td>
-                                <span class="badge bg-label-primary me-1">{{ $user->role->role }}</span>
+                                @if($user->roles)
+                                    <span class="badge bg-label-primary me-1">{{ $user->roles->role }}</span>
+                                @endif
                             </td>
                             <td>
                                 <div class="dropdown">

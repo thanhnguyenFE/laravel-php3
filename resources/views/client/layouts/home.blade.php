@@ -69,13 +69,13 @@
                     <img src="https://chieuphimquocgia.com.vn/_next/image?url=%2Fimages%2Flogo.png&w=96&q=75" alt="" class="w-full h-full">
                 </a>
                 <nav class="ml-12 hidden xl:flex items-center gap-10 z-30">
-                    <a class="hover:text-red-500 text-red-500" href="{{route('client.home')}}">Trang chủ</a>
-                    <a class="hover:text-red-500 text-white" href="{{route('client.schedule')}}">Lịch chiếu</a>
-                    <a class="hover:text-red-500 text-white" href="#">Tin tức</a>
-                    <a class="hover:text-red-500 text-white" href="#">Khuyến mãi </a>
-                    <a class="hover:text-red-500 text-white" href="#">Giá vé</a>
-                    <a class="hover:text-red-500 text-white" href="#">Liên hoan phim</a>
-                    <a class="hover:text-red-500 text-white" href="#">Giới thiệu</a>
+                    <a class="{{ request()->routeIs('client.home') ? 'text-red-500' : 'text-white' }} hover:text-red-500" href="{{ route('client.home') }}">Trang chủ</a>
+                    <a class="{{ request()->routeIs('client.schedule') ? 'text-red-500' : 'text-white' }} hover:text-red-500" href="{{ route('client.schedule') }}">Lịch chiếu</a>
+                    <a class="{{ request()->is('news') ? 'text-red-500' : 'text-white' }} hover:text-red-500" href="#">Tin tức</a>
+                    <a class="{{ request()->is('promotions') ? 'text-red-500' : 'text-white' }} hover:text-red-500" href="#">Khuyến mãi</a>
+                    <a class="{{ request()->is('ticket-prices') ? 'text-red-500' : 'text-white' }} hover:text-red-500" href="#">Giá vé</a>
+                    <a class="{{ request()->is('film-festivals') ? 'text-red-500' : 'text-white' }} hover:text-red-500" href="#">Liên hoan phim</a>
+                    <a class="{{ request()->is('about') ? 'text-red-500' : 'text-white' }} hover:text-red-500" href="#">Giới thiệu</a>
                 </nav>
                @if(auth()->user())
                    <div class="ml-auto flex items-center gap-4">

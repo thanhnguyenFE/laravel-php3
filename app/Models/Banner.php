@@ -15,4 +15,9 @@ class Banner extends Model
         'url',
         'status',
     ];
+
+    public function getBannersActive()
+    {
+        return Banner::where('status', 1)->get();
+    }
 }

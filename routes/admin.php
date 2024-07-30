@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::middleware('admin')->group(function () {
     Route::get('/', function () {
         return view('admin.index');
     });
@@ -31,6 +32,12 @@ use Illuminate\Support\Facades\Route;
     Route::resource('users', \App\Http\Controllers\UserController::class);
     Route::get('/roles/show', [\App\Http\Controllers\RoleController::class, 'showDetailRole']);
     Route::resource('roles', \App\Http\Controllers\RoleController::class);
+});
+
+    Route::get('/login', function (){
+        return view('admin.login');
+    })->name('admin.login');
+
 
 
 

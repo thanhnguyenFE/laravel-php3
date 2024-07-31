@@ -35,9 +35,11 @@ Route::controller(PaymentController::class)->group(function () {
 
 Route::prefix('lich-chieu')->group(function () {
     Route::get('/', [ScheduleController::class, 'list'])->name('client.schedule');
-    Route::get('/{date?}', [ScheduleController::class, 'list'])->name('client.schedule.date');
-    Route::get('/{slug}/{id?}', [ScheduleController::class, 'show'])->name('client.schedule.detail');
+    Route::get('date/{date?}', [ScheduleController::class, 'list'])->name('client.schedule.date');
+    Route::get('movie/{slug}/{id?}', [ScheduleController::class, 'show'])->name('client.schedule.detail');
 });
+
+Route::post('/movie/comment', [\App\Http\Controllers\Client\HomeController::class, 'comment'])->name('client.comment');
 
 
 

@@ -31,7 +31,7 @@ class BannerController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp',
         ]);
         $imageName = time() . '.' . $request->image->extension();
         $request->image->storeAs('public/banners', $imageName);
@@ -72,10 +72,15 @@ class BannerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
-        ]);
+        try {
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp',
+            ]);
+        }
+        catch (\Exception $e) {
+            return redirect()->back()->with('success', $e->getMessage());
+        }
         $banner = Banner::find($id);
         $banner->title = $request->title;
         if ($request->has('image')) {

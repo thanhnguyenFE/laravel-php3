@@ -31,11 +31,20 @@ class ScheduleController extends Controller
         return view('client.schedule', compact('days', 'movies', 'date'));
     }
 
-    public function show($slug, $id=null)
+    public function show(Request $request, $slug, $id=null)
     {
         $movie = Movie::where('slug', $slug)->first();
+        $comments = $movie->comments;
+        $scheduleDays = $movie->schedules->groupBy('date');
+        if($request->date){
+            $date = $request->query('date');
+        }else{
+            $date = $scheduleDays->keys()->first();
+        }
+        $times = $scheduleDays->get($date);
         if($id){
-            $schedule = Schedule::where('id', $id)->first();
+            $schedule = Schedule::class::find($id);
+            $room = $schedule->room;
             $bookedSeats = Ticket::where('schedule_id', $id)->pluck('seats')->toArray();
             $bookedSeats = array_reduce($bookedSeats, function ($carry, $item) {
                 return array_merge($carry, json_decode($item, true));
@@ -43,9 +52,12 @@ class ScheduleController extends Controller
         }
         else{
             $schedule = null;
+            $room = null;
             $bookedSeats = [];
         }
-        return view('client.schedule_detail', compact('schedule', 'movie', 'id', 'bookedSeats'));
+        return view('client.schedule_detail', compact(
+            'scheduleDays', 'movie', 'id', 'bookedSeats', 'date', 'times', 'room', 'schedule', 'comments'
+        ));
 
     }
 }

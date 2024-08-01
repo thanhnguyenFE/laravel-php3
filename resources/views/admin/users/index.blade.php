@@ -21,15 +21,15 @@
                     <tbody>
                     @foreach($users as $user)
                         <tr class="cursor-pointer">
-                            <td><img src="{{ filter_var($user->avatar, FILTER_VALIDATE_URL) ? $user->avatar : asset('storage/avatars/'.$user->avatar)}}" alt="{{$user->name}}" class="img-fluid rounded me-3 w-[100px] h-[100px]"></td>
+                            <td><img src="{{ filter_var($user->avatar, FILTER_VALIDATE_URL) ? $user->avatar : asset('storage/avatars/'.$user->avatar)}}" alt="{{$user->name}}" class="img-fluid object-cover rounded-full me-3 w-[50px] h-[50px]"></td>
                             <td>{{$user->name}}</td>
                             <td>
                                 {{$user->phone}}
                             </td>
                             <td>{{$user->email}}</td>
                             <td>
-                                @if($user->roles)
-                                    <span class="badge bg-label-primary me-1">{{ $user->roles->role }}</span>
+                                @if($user->role)
+                                    <span class="badge bg-label-primary me-1">{{ $user->role->role }}</span>
                                 @endif
                             </td>
                             <td>

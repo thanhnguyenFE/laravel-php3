@@ -104,6 +104,11 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = User::find($id);
+        if ($user->role_id == 4) {
+            return redirect()->route('users.index')->withErrors([
+                'error' => 'You cannot delete the admin user.',
+            ]);
+        }
         $user->delete();
         return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }

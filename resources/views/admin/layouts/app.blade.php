@@ -8,7 +8,7 @@
     data-template="vertical-menu-template-free"
 >
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
@@ -16,30 +16,30 @@
 
     <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
 
-    <meta name="description" content="" />
+    <meta name="description" content=""/>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('img/favicon/favicon.ico') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/favicon/favicon.ico') }}"/>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link
         href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
         rel="stylesheet"
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="{{ asset('vendor/fonts/boxicons.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/fonts/boxicons.css') }}"/>
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="{{ asset('vendor/css/core.css') }}" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="{{ asset('vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('vendor/css/core.css') }}" class="template-customizer-core-css"/>
+    <link rel="stylesheet" href="{{ asset('vendor/css/theme-default.css') }}" class="template-customizer-theme-css"/>
     <link rel="stylesheet" href="{{asset('css/demo.css')}}">
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{{asset('vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}" />
+    <link rel="stylesheet" href="{{asset('vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}"/>
 
-    <link rel="stylesheet" href="{{asset('vendor/libs/apex-charts/apex-charts.css')}}" />
+    <link rel="stylesheet" href="{{asset('vendor/libs/apex-charts/apex-charts.css')}}"/>
 
     <!-- Helpers -->
     <script src="{{asset('vendor/js/helpers.js')}}"></script>
@@ -56,7 +56,7 @@
 <!-- Layout wrapper -->
 <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
-            @if(session('success'))
+        @if(session('success'))
             <div
                 class="bs-toast toast fade toast-placement-ex show bg-info position-fixed right-0 top-0 me-3 mt-3"
                 role="alert"
@@ -72,6 +72,31 @@
                 <div class="toast-body">
                     {{ session('success') }}
                 </div>
+            </div>
+        @elseif($errors->any())
+            <div id="toast-danger"
+                 class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 fixed top-5 right-5 z-50"
+                 role="alert">
+                <div
+                    class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                         viewBox="0 0 20 20">
+                        <path
+                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"/>
+                    </svg>
+                    <span class="sr-only">Error icon</span>
+                </div>
+                <div class="ms-3 text-sm font-normal">{{$errors->first()}}</div>
+                <button type="button"
+                        class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+                        data-dismiss-target="#toast-danger" aria-label="Close">
+                    <span class="sr-only">Close</span>
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                         viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                </button>
             </div>
         @endif
 
@@ -147,152 +172,66 @@
 
             <ul class="menu-inner py-1">
                 <!-- Dashboard -->
-                <li class="menu-item active">
-                    <a href="#" class="menu-link">
+                <li class="menu-item {{request()->routeIs('admin.index') ? 'active' : ''}}">
+                    <a href="{{route('admin.index')}}" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-home-circle"></i>
                         <div data-i18n="Analytics">Dashboard</div>
                     </a>
                 </li>
 
-                <li class="menu-item">
+                <li class="menu-item {{request()->routeIs('movies.index') ? 'active' : ''}}">
                     <a href="{{route('movies.index')}}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <i class="menu-icon tf-icons bx bx-movie"></i>
                         <div data-i18n="Movies">Movies</div>
                     </a>
                 </li>
 
-                <li class="menu-item">
+                <li class="menu-item {{request()->routeIs('categories.index') ? 'active' : ''}}">
                     <a href="{{route('categories.index')}}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <i class="menu-icon tf-icons bx bx-category"></i>
                         <div data-i18n="Categories">Categories</div>
                     </a>
                 </li>
 
-                <li class="menu-item">
+                <li class="menu-item {{request()->routeIs('rooms.index') ? 'active' : ''}}">
                     <a href="{{route('rooms.index')}}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <i class="menu-icon tf-icons bx bx-camera-home"></i>
                         <div data-i18n="Rooms">Rooms</div>
                     </a>
                 </li>
 
-                <li class="menu-item">
+                <li class="menu-item {{request()->routeIs('schedules.index') ? 'active' : ''}}">
                     <a href="{{route('schedules.index')}}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <i class="menu-icon tf-icons bx bx-calendar"></i>
                         <div data-i18n="Schedules">Schedules</div>
                     </a>
                 </li>
 
-                <li class="menu-item">
+                <li class="menu-item {{request()->routeIs('tickets.index') ? 'active' : ''}}">
                     <a href="{{route('tickets.index')}}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <i class="menu-icon tf-icons bx bx-blanket"></i>
                         <div data-i18n="Tickets">Tickets</div>
                     </a>
                 </li>
 
-                <li class="menu-item">
+                <li class="menu-item {{request()->routeIs('banners.index') ? 'active' : ''}}">
                     <a href="{{route('banners.index')}}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <i class="menu-icon tf-icons bx bx-images"></i>
                         <div data-i18n="Banners">Banner Marketing</div>
                     </a>
                 </li>
 
-                <li class="menu-item">
+                <li class="menu-item {{request()->routeIs('roles.index') ? 'active' : ''}}">
                     <a href="{{route('roles.index')}}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <i class="menu-icon tf-icons bx bx-check-shield"></i>
                         <div data-i18n="Roles">Roles and Permissions</div>
                     </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item {{request()->routeIs('users.index') ? 'active' : ''}}">
                     <a href="{{route('users.index')}}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <i class="menu-icon tf-icons bx bx-user"></i>
                         <div data-i18n="Users">Users</div>
                     </a>
-                </li>
-
-                <!-- Layouts -->
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-layout"></i>
-                        <div data-i18n="Layouts">Layouts</div>
-                    </a>
-
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="layouts-without-menu.html" class="menu-link">
-                                <div data-i18n="Without menu">Without menu</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="layouts-without-navbar.html" class="menu-link">
-                                <div data-i18n="Without navbar">Without navbar</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="layouts-container.html" class="menu-link">
-                                <div data-i18n="Container">Container</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="layouts-fluid.html" class="menu-link">
-                                <div data-i18n="Fluid">Fluid</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="layouts-blank.html" class="menu-link">
-                                <div data-i18n="Blank">Blank</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">Pages</span>
-                </li>
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                        <div data-i18n="Account Settings">Account Settings</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="pages-account-settings-account.html" class="menu-link">
-                                <div data-i18n="Account">Account</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="pages-account-settings-notifications.html" class="menu-link">
-                                <div data-i18n="Notifications">Notifications</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="pages-account-settings-connections.html" class="menu-link">
-                                <div data-i18n="Connections">Connections</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-                        <div data-i18n="Authentications">Authentications</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="auth-login-basic.html" class="menu-link" target="_blank">
-                                <div data-i18n="Basic">Login</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="auth-register-basic.html" class="menu-link" target="_blank">
-                                <div data-i18n="Basic">Register</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
-                                <div data-i18n="Basic">Forgot Password</div>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
             </ul>
         </aside>
@@ -343,9 +282,11 @@
 
                         <!-- User -->
                         <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
+                               data-bs-toggle="dropdown">
                                 <div class="avatar avatar-online">
-                                    <img src="{{asset('img/avatars/1.png')}}" alt class="w-px-40 h-auto rounded-circle" />
+                                    <img src="{{asset('storage/avatars/'.auth()->user()->avatar)}}" alt
+                                         class="w-px-40 h-[40px] rounded-circle object-cover"/>
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
@@ -354,11 +295,12 @@
                                         <div class="d-flex">
                                             <div class="flex-shrink-0 me-3">
                                                 <div class="avatar avatar-online">
-                                                    <img src="{{asset('img/avatars/1.png')}}" alt class="w-px-40 h-auto rounded-circle" />
+                                                    <img src="{{asset('storage/avatars/'.auth()->user()->avatar)}}" alt
+                                                         class="w-px-40 h-[40px] rounded-circle object-cover"/>
                                                 </div>
                                             </div>
                                             <div class="flex-grow-1">
-                                                <span class="fw-semibold d-block">John Doe</span>
+                                                <span class="fw-semibold d-block">{{auth()->user()->name}}</span>
                                                 <small class="text-muted">Admin</small>
                                             </div>
                                         </div>
@@ -392,7 +334,7 @@
                                     <div class="dropdown-divider"></div>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="auth-login-basic.html">
+                                    <a class="dropdown-item" href="{{route('admin.logout')}}">
                                         <i class="bx bx-power-off me-2"></i>
                                         <span class="align-middle">Log Out</span>
                                     </a>
@@ -426,7 +368,6 @@
 </div>
 
 
-
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
 <script src="{{asset('vendor/libs/jquery/jquery.js')}}"></script>
@@ -450,10 +391,10 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         var successAlert = document.getElementById('alertToast');
         if (successAlert) {
-            setTimeout(function() {
+            setTimeout(function () {
                 successAlert.style.display = 'none';
             }, 2000); // 2000 milliseconds = 2 seconds
         }

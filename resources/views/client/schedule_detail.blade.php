@@ -154,14 +154,13 @@
                     </a>
                 @endforeach
             @endif
-
         </div>
         <div class="text-sm text-center mx-4 md:px-6 lg:mx-auto mt-4 text-orange-500">
             <b>Lưu ý:</b>
             Khán giả dưới 13 tuổi chỉ chọn suất chiếu kết thúc trước 22h và Khán giả dưới 16 tuổi chỉ chọn suất chiếu kết thúc trước 23h.
         </div>
     </div>
-        @if(!$id)
+        @if(!$id && $times)
             <div class="mx-auto w-full max-w-4xl py-6 space-y-6 relative">
                 <div class="grid grid-cols-5 gap-2 xl:gap-4 px-4 xl:px-0">
                     @foreach($times as $time)
@@ -171,7 +170,7 @@
                     @endforeach
                 </div>
             </div>
-        @else
+        @elseif($id)
             <div class="mx-auto max-w-7xl">
                 <div class="pb-10 pt-5 w-full xl:w-3/4 mx-auto px-4 xl:px-0">
                     <div class="flex items-center justify-between mb-5">

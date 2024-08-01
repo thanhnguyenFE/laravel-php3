@@ -26,6 +26,7 @@ class User extends Authenticatable
         'password',
         'avatar',
         'phone',
+        'role_id',
     ];
 
     /**
@@ -57,7 +58,7 @@ class User extends Authenticatable
         return $this->hasMany(Ticket::class, 'user_id');
     }
 
-    public function roles():BelongsTo{
+    public function role():BelongsTo{
         return $this->belongsTo(Role::class, 'role_id');
     }
 }

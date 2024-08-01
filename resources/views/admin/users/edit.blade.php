@@ -12,7 +12,7 @@
                         @csrf
                         <div class="mb-3">
                             <label for="role_id" class="form-label">Role</label>
-                            <select class="form-control" id="role_id" name="role_id">
+                            <select class="form-control" id="role_id" name="role_id" {{$user->role_id == 4 ? 'disabled' : ''}}>
                                 @foreach($roles as $role)
                                     <option value="{{ $role->id }}" @if($role->id == $user->role_id) selected @endif>{{ $role->role }}</option>
                                 @endforeach
@@ -20,16 +20,16 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="basic-default-name">Name</label>
-                            <input type="text" class="form-control" id="basic-default-name" placeholder="John Doe" name="name" value="{{ $user->name }}"/>
+                            <input type="text" class="form-control" id="basic-default-name" placeholder="John Doe" name="name" value="{{ $user->name }}" {{$user->role_id == 4 ? 'disabled' : ''}}/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="basic-default-email">Email</label>
-                            <input type="email" class="form-control" id="basic-default-email" placeholder="johndoe@example.com" name="email" value="{{ $user->email }}"/>
+                            <input type="email" class="form-control" id="basic-default-email" placeholder="johndoe@example.com" name="email" value="{{ $user->email }}" {{$user->role_id == 4 ? 'disabled' : ''}}/>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label" for="basic-default-password">Password</label>
-                            <input type="text" class="form-control" id="basic-default-password" placeholder="●●●●●●●●" name="password" value="{{$user->password}}"/>
+                            <input type="password" class="form-control" id="basic-default-password" placeholder="●●●●●●●●" name="password" value="{{$user->password}}" {{$user->role_id == 4 ? 'disabled' : ''}}/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="basic-default-phone">Phone Number</label>

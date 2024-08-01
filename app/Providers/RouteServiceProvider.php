@@ -32,9 +32,11 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/api.php'));
 
             Route::middleware('web')
+                ->domain('cinema.dev.vn')
                 ->group(base_path('routes/web.php'));
 
             Route::middleware('admin')
+                ->domain('cms.cinema.dev.vn')
                 ->prefix('admin')
                 ->group(base_path('routes/admin.php'));
         });

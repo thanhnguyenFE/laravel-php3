@@ -15,9 +15,9 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check() && auth()->user()) {
+        if (auth()->check() && auth()->user()->role_id == 4) {
             return $next($request);
         }
-        return redirect(route('admin.login'));
+        return redirect()->route('admin.login')->withErrors(['error' => 'Bạn không có quyền truy cập']);
     }
 }

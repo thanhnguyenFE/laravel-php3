@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\Schedule;
 use App\Models\Ticket;
 use App\Models\User;
@@ -33,11 +34,13 @@ class AuthController extends Controller
             'enter_password' => 'required|same:password',
         ]);
         $user = User::where('email', $request->email)->first();
+        $role_id = Role::where('role', 'Customer')->first()->id;
         if(!$user){
             User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
+                'role_id' => $role_id,
             ]);
         }
         else{

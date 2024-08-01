@@ -1,11 +1,14 @@
 <?php
+
 namespace App\Helpers;
 
-function formatDate($date, $format = 'd/m/Y'){
+function formatDate($date, $format = 'd/m/Y')
+{
     return \Carbon\Carbon::parse($date)->format($format);
 }
 
-function getDate($date, $type){
+function getDate($date, $type)
+{
     switch ($type) {
         case 'day':
             return \Carbon\Carbon::parse($date)->format('d');

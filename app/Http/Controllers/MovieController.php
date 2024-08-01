@@ -33,16 +33,22 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'slug' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
-            'duration' => 'required|integer|min:0',
-            'release_date' => 'required|date',
-            'category_ids' => 'required|array',
-            'category_ids.*' => 'exists:categories,id',
-        ]);
+        try {
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'slug' => 'required|string|max:255',
+                'description' => 'required|string',
+                'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp',
+                'duration' => 'required|integer|min:0',
+                'release_date' => 'required|date',
+                'category_ids' => 'required|array',
+                'category_ids.*' => 'exists:categories,id',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            $errors = $e->validator->errors();
+            return response()->json(['errors' => $errors], 422);
+        }
+
 
         $hours = floor($request->duration / 60);
         $minutes = $request->duration % 60;
@@ -57,7 +63,7 @@ class MovieController extends Controller
         $movie->duration = $duration;
         $movie->release_date = $request->release_date;
         $movie->thumbnail = $thumbnailName;
-        if($request->has('status')) {
+        if ($request->has('status')) {
             $movie->status = $request->status;
         }
         $movie->save();
@@ -109,7 +115,7 @@ class MovieController extends Controller
         $duration = sprintf('%02d:%02d:00', $hours, $minutes);
 
         $movie = Movie::find($id);
-        if($request->hasFile('thumbnail')) {
+        if ($request->hasFile('thumbnail')) {
             $thumbnailName = time() . '.' . $request->thumbnail->extension();
             $request->thumbnail->storeAs('public/movies', $thumbnailName);
             $movie->thumbnail = $thumbnailName;
@@ -120,9 +126,9 @@ class MovieController extends Controller
         $movie->description = $request->description;
         $movie->duration = $duration;
         $movie->release_date = $request->release_date;
-        if($request->has('status')) {
+        if ($request->has('status')) {
             $movie->status = $request->status;
-        }else{
+        } else {
             $movie->status = 0;
         }
         $movie->save();

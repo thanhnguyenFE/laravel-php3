@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function login (Request $request)
+    public function login(Request $request)
     {
-         $request->validate([
+        $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
@@ -26,6 +26,7 @@ class AuthController extends Controller
             'error' => 'Email hoặc mật khẩu không đúng',
         ]);
     }
+
     public function register(Request $request)
     {
         $request->validate([
@@ -35,27 +36,29 @@ class AuthController extends Controller
         ]);
         $user = User::where('email', $request->email)->first();
         $role_id = Role::where('role', 'Customer')->first()->id;
-        if(!$user){
+        if (!$user) {
             User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
                 'role_id' => $role_id,
             ]);
-        }
-        else{
+        } else {
             return back()->withErrors([
                 'error' => 'Email này đã được đăng kí',
             ]);
         }
         return redirect()->back()->with('success', 'Đăng kí tài khoản thành công');
     }
-    public function logout(Request $request){
+
+    public function logout(Request $request)
+    {
         auth()->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/');
     }
+
     public function profile()
     {
         $user = User::find(auth()->user()->id);
@@ -63,16 +66,17 @@ class AuthController extends Controller
         return view('client.profile', compact('tickets'));
     }
 
-    public function updateProfile(Request $request){
+    public function updateProfile(Request $request)
+    {
         $user = User::find(auth()->user()->id);
-        if($request->has('password', 'password_new', 'enter_password_new')){
-            if(Hash::check($request->password, auth()->user()->password)){
+        if ($request->password && $request->password_new && $request->enter_password_new) {
+            if (Hash::check($request->password, auth()->user()->password)) {
                 $request->validate([
                     'password_new' => 'required',
                     'enter_password_new' => 'required|same:password_new',
                 ]);
                 $user->password = bcrypt($request->password_new);
-            }else{
+            } else {
                 return back()->withErrors([
                     'error' => 'Mật khẩu hiện tại không đúng',
                 ]);
@@ -80,18 +84,16 @@ class AuthController extends Controller
         }
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.auth()->user()->id,
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
-            'phone'=>   'numeric|digits_between:10,11|nullable',
+            'phone' => 'numeric|digits_between:10,11|nullable',
         ]);
 
-        if($request->has('avatar')){
+        if ($request->has('avatar')) {
             $avatarName = time() . '.' . $request->avatar->extension();
             $request->avatar->storeAs('public/avatars', $avatarName);
             $user->avatar = $avatarName;
         }
         $user->name = $request->name;
-        $user->email = $request->email;
         $user->phone = $request->phone;
         $user->save();
         return redirect()->back()->with('success', 'Cập nhật thông tin thành công');

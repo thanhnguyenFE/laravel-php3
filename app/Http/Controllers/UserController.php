@@ -77,14 +77,21 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $user = User::find($id);
+        if ($user->role_id == 4) {
+            $request->validate([
+                'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp',
+                'phone' => 'nullable|numeric',
+            ]);
+        }
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp',
             'phone' => 'nullable|numeric',
             'role_id' => 'required',
         ]);
-        $user = User::find($id);
+
         if ($request->hasFile('avatar')) {
             $avatarName = time() . '.' . $request->avatar->extension();
             $request->avatar->storeAs('public/avatars', $avatarName);

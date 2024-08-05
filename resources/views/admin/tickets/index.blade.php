@@ -4,6 +4,7 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="d-flex align-items-center justify-content-between">
             <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tickets /</span> List</h4>
+            <a type="button" class="btn btn-outline-primary" href="{{route('tickets.create')}}">Create</a>
         </div>
         <div class="card">
             <div class="table-responsive text-nowrap">
@@ -34,7 +35,7 @@
                                 {{$ticket->schedule->date}}
                             </td>
                             <td>
-                                @if ($ticket->status == 1)
+                                @if ($ticket->payment_status == 1)
                                     <i class='bx bx-check-circle check icon text-success'></i> <!-- Check icon -->
                                 @else
                                     <i class='bx bx-x-circle cross icon text-danger'></i> <!-- Cross icon -->

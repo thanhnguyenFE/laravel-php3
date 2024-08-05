@@ -15,6 +15,7 @@ class PaymentController extends Controller
     {
         return view('client.payment');
     }
+
     public function infoSchedule(Request $request)
     {
         $schedule = Schedule::find($request->schedule_id);
@@ -31,22 +32,23 @@ class PaymentController extends Controller
         $seats = $request->seats;
         $price = $request->price;
         $payment_method = $request->payment_method;
-        if(auth()->user()){
-            if($payment_method){
+        if (auth()->user()) {
+            if ($payment_method) {
                 $ticket = new \App\Models\Ticket();
                 $ticket->user_id = auth()->user()->id;
                 $ticket->schedule_id = $schedule_id;
                 $ticket->total_price = $price;
                 $ticket->payment_method = $payment_method;
+                $ticket->payment_status = 1;
                 $ticket->seats = json_encode($seats);
                 $ticket->date = Carbon::now();
                 $ticket->save();
-                return response()->json(['code'=>0, 'message'=>'Thanh toàn thành công', 'url'=>'/profile']);
-            }else{
-                return response()->json(['code'=>1, 'message'=>'Vui lòng chọn phương thức thanh toán!']);
+                return response()->json(['code' => 0, 'message' => 'Thanh toàn thành công', 'url' => '/profile']);
+            } else {
+                return response()->json(['code' => 1, 'message' => 'Vui lòng chọn phương thức thanh toán!']);
             }
-        }else{
-            return response()->json(['code'=>1, 'message'=>'Vui lòng đăng nhập để được đặt vé']);
+        } else {
+            return response()->json(['code' => 1, 'message' => 'Vui lòng đăng nhập để được đặt vé']);
         }
 
     }

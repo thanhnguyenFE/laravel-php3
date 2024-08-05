@@ -40,7 +40,7 @@ class CommentController extends Controller
             $comment_id = $request->input('comment_id');
             $comment = Comment::find($comment_id);
             $user = $comment->user;
-            $movie= $comment->movie;
+            $movie = $comment->movie;
             $comment->user = $user;
             $comment->movie = $movie;
             $comment->makeHidden('user_id', 'movie_id');
@@ -63,9 +63,17 @@ class CommentController extends Controller
      */
     public function update(Request $request)
     {
+        $request->validate([
+            'content' => 'required',
+            'rating' => 'required',
+//            'status' => 'required',
+        ]);
         $comment_id = $request->input('comment_id');
         $comment = Comment::find($comment_id);
-        $comment->update($request->all());
+        $comment->content = $request->input('content');
+        $comment->rating = $request->input('rating');
+        $comment->status = $request->input('status');
+        $comment->save();
         return redirect()->back()->with('success', 'Comment updated successfully!');
     }
 

@@ -40,7 +40,7 @@ class CommentController extends Controller
             $comment_id = $request->input('comment_id');
             $comment = Comment::find($comment_id);
             $user = $comment->user;
-            $movie= $comment->movie;
+            $movie = $comment->movie;
             $comment->user = $user;
             $comment->movie = $movie;
             $comment->makeHidden('user_id', 'movie_id');
@@ -75,6 +75,6 @@ class CommentController extends Controller
     public function destroy(string $id)
     {
         Comment::find($id)->delete();
-        return redirect()->route('schedules.index')->with('success', 'Comment deleted successfully!');
+        return redirect()->back()->with('success', 'Comment deleted successfully!');
     }
 }

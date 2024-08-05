@@ -51,6 +51,7 @@ class HomeController extends Controller
         $comment->movie_id = $request->movie_id;
         $comment->content = $request->comment;
         $comment->rating = $request->rating;
+        $comment->status = 1;
         $comment->date = Carbon::now();
         $comment->save();
         return redirect()->back()->with('success', 'Đánh giá bộ phim thành công!');

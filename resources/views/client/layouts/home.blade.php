@@ -82,7 +82,7 @@
          style="backdrop-filter: blur(40px); background-color: rgba(16,20,27,.3)">
         <div class="mx-auto max-w-7xl">
             <div class="px-4 xl:px-0 flex items-center h-16 xl:h-20 gap-2">
-                <a href="#" class="relative w-[60px] xl:w-[70px] h-[40px] xl:h-[50px]">
+                <a href="{{ route('client.home') }}" class="relative w-[60px] xl:w-[70px] h-[40px] xl:h-[50px]">
                     <img src="https://chieuphimquocgia.com.vn/_next/image?url=%2Fimages%2Flogo.png&w=96&q=75" alt=""
                          class="w-full h-full">
                 </a>
@@ -170,24 +170,24 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <div class="p-4 md:p-5">
+                <div class="px-5 pb-5">
                     <form class="space-y-4" action="{{route('client.login')}}" id="form-login" method="POST">
                         @csrf
                         <div>
                             <label for="email-login" class="block mb-2 text-sm font-medium text-white dark:text-white">Email</label>
                             <input type="email" name="email" id="email-login"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                    placeholder="name@company.com" required/>
                         </div>
                         <div>
                             <label for="password-login"
                                    class="block mb-2 text-sm font-medium text-white dark:text-white">Password</label>
                             <input type="password" name="password" id="password-login" placeholder="••••••••"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                    required/>
                         </div>
                         <button type="submit"
-                                class="w-full text-white bg-red-500 hover:bg-danger focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                class="mt-4 w-full text-white bg-red-500 hover:bg-danger focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                             Login to your account
                         </button>
                     </form>
@@ -217,7 +217,7 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <div class="p-4 md:p-5">
+                <div class="px-5 pb-5">
                     <form class="space-y-4" action="{{route('client.register')}}" method="post">
                         @csrf
                         <div>

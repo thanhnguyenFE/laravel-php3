@@ -11,11 +11,13 @@
                         @csrf
                         <div class="mb-3">
                             <label class="form-label" for="basic-default-title">Name Room</label>
-                            <input type="text" class="form-control" id="basic-default-title" placeholder="John Doe" name="name"/>
+                            <input type="text" class="form-control" id="basic-default-title" placeholder="John Doe"
+                                   name="name"/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="basic-default-slug">Slug</label>
-                            <input type="text" class="form-control" id="basic-default-slug" placeholder="john-doe" name="slug"/>
+                            <input type="text" class="form-control" id="basic-default-slug" placeholder="john-doe"
+                                   name="slug"/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="basic-default-description">Description</label>

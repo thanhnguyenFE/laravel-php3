@@ -22,3 +22,5 @@ function getDate($date, $type)
             return $date;
     }
 }
+
+

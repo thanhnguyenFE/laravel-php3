@@ -1,6 +1,7 @@
 @extends('admin.layouts.app')
 @section('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/css/multi-select-tag.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/css/multi-select-tag.css">
 @endsection
 @section('main-content')
     <div class="row">
@@ -14,11 +15,14 @@
                         @csrf
                         <div class="mb-3">
                             <label class="form-label" for="basic-default-title">Title</label>
-                            <input type="text" class="form-control" id="basic-default-title" placeholder="John Doe" name="title"/>
+                            <input type="text" class="form-control" id="basic-default-title" placeholder="John Doe"
+                                   name="title"/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="basic-default-slug">Slug</label>
-                            <input type="text" class="form-control" id="basic-default-slug" placeholder="john-doe" name="slug"/>
+                            <input type="text" class="form-control" id="basic-default-slug" placeholder="john-doe"
+                                   name="slug"
+                            />
                         </div>
                         <div class="mb-3">
                             <label for="category_ids" class="form-label">Categories</label>
@@ -71,7 +75,7 @@
                         </div>
 
                         <div class="mb-3">
-                          <label class="form-label d-block" for="basic-default-status">Status</label>
+                            <label class="form-label d-block" for="basic-default-status">Status</label>
                             <div class="form-check form-check-inline">
                                 <input type="checkbox" class="form-check-input" id="status" value="1" name="status"/>
                                 <label class="form-check-label" for="status">Active</label>
@@ -89,7 +93,7 @@
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/js/multi-select-tag.js"></script>
     <script>
-        new MultiSelectTag('category_ids',{
+        new MultiSelectTag('category_ids', {
             tagColor: {
                 textColor: '#696cff',
                 borderColor: '#696cff',

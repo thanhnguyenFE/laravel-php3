@@ -391,14 +391,200 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var successAlert = document.getElementById('alertToast');
-        if (successAlert) {
-            setTimeout(function () {
-                successAlert.style.display = 'none';
-            }, 2000); // 2000 milliseconds = 2 seconds
+    function convertNameToSlug(name) {
+        // Define a map for Vietnamese characters to ASCII
+        const vietnameseMap = {
+            'á': 'a',
+            'à': 'a',
+            'ả': 'a',
+            'ã': 'a',
+            'ạ': 'a',
+            'ă': 'a',
+            'ắ': 'a',
+            'ằ': 'a',
+            'ẳ': 'a',
+            'ẵ': 'a',
+            'ặ': 'a',
+            'â': 'a',
+            'ấ': 'a',
+            'ầ': 'a',
+            'ẩ': 'a',
+            'ẫ': 'a',
+            'ậ': 'a',
+            'đ': 'd',
+            'é': 'e',
+            'è': 'e',
+            'ẻ': 'e',
+            'ẽ': 'e',
+            'ẹ': 'e',
+            'ê': 'e',
+            'ế': 'e',
+            'ề': 'e',
+            'ể': 'e',
+            'ễ': 'e',
+            'ệ': 'e',
+            'í': 'i',
+            'ì': 'i',
+            'ỉ': 'i',
+            'ĩ': 'i',
+            'ị': 'i',
+            'ó': 'o',
+            'ò': 'o',
+            'ỏ': 'o',
+            'õ': 'o',
+            'ọ': 'o',
+            'ô': 'o',
+            'ố': 'o',
+            'ồ': 'o',
+            'ổ': 'o',
+            'ỗ': 'o',
+            'ộ': 'o',
+            'ơ': 'o',
+            'ớ': 'o',
+            'ờ': 'o',
+            'ở': 'o',
+            'ỡ': 'o',
+            'ợ': 'o',
+            'ú': 'u',
+            'ù': 'u',
+            'ủ': 'u',
+            'ũ': 'u',
+            'ụ': 'u',
+            'ư': 'u',
+            'ứ': 'u',
+            'ừ': 'u',
+            'ử': 'u',
+            'ữ': 'u',
+            'ự': 'u',
+            'ý': 'y',
+            'ỳ': 'y',
+            'ỷ': 'y',
+            'ỹ': 'y',
+            'ỵ': 'y',
+            'Á': 'A',
+            'À': 'A',
+            'Ả': 'A',
+            'Ã': 'A',
+            'Ạ': 'A',
+            'Ă': 'A',
+            'Ắ': 'A',
+            'Ằ': 'A',
+            'Ẳ': 'A',
+            'Ẵ': 'A',
+            'Ặ': 'A',
+            'Â': 'A',
+            'Ấ': 'A',
+            'Ầ': 'A',
+            'Ẩ': 'A',
+            'Ẫ': 'A',
+            'Ậ': 'A',
+            'Đ': 'D',
+            'É': 'E',
+            'È': 'E',
+            'Ẻ': 'E',
+            'Ẽ': 'E',
+            'Ẹ': 'E',
+            'Ê': 'E',
+            'Ế': 'E',
+            'Ề': 'E',
+            'Ể': 'E',
+            'Ễ': 'E',
+            'Ệ': 'E',
+            'Í': 'I',
+            'Ì': 'I',
+            'Ỉ': 'I',
+            'Ĩ': 'I',
+            'Ị': 'I',
+            'Ó': 'O',
+            'Ò': 'O',
+            'Ỏ': 'O',
+            'Õ': 'O',
+            'Ọ': 'O',
+            'Ô': 'O',
+            'Ố': 'O',
+            'Ồ': 'O',
+            'Ổ': 'O',
+            'Ỗ': 'O',
+            'Ộ': 'O',
+            'Ơ': 'O',
+            'Ớ': 'O',
+            'Ờ': 'O',
+            'Ở': 'O',
+            'Ỡ': 'O',
+            'Ợ': 'O',
+            'Ú': 'U',
+            'Ù': 'U',
+            'Ủ': 'U',
+            'Ũ': 'U',
+            'Ụ': 'U',
+            'Ư': 'U',
+            'Ứ': 'U',
+            'Ừ': 'U',
+            'Ử': 'U',
+            'Ữ': 'U',
+            'Ự': 'U',
+            'Ý': 'Y',
+            'Ỳ': 'Y',
+            'Ỷ': 'Y',
+            'Ỹ': 'Y',
+            'Ỵ': 'Y'
+        };
+
+        // Replace Vietnamese characters
+        name = name.replace(/[^A-Za-z0-9\s]/g, function (x) {
+            return vietnameseMap[x] || x;
+        });
+
+        // Convert to lowercase
+        name = name.toLowerCase();
+
+        // Replace spaces and non-alphanumeric characters with hyphens
+        name = name.replace(/[^a-z0-9]+/g, '-');
+
+        // Remove leading and trailing hyphens
+        name = name.replace(/^-+|-+$/g, '');
+
+        return name;
+    }
+
+
+    $(document).ready(function () {
+        const nameInput = document.getElementById("basic-default-title");
+        const slugInput = document.getElementById("basic-default-slug");
+        nameInput.addEventListener("blur", function () {
+            const slug = convertNameToSlug(nameInput.value);
+            slugInput.value = slug;
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            var successAlert = document.getElementById('alertToast');
+            if (successAlert) {
+                setTimeout(function () {
+                    successAlert.style.display = 'none';
+                }, 2000); // 2000 milliseconds = 2 seconds
+            }
+        });
+
+        $("#search").keyup(function () {
+            search_table($(this).val());
+        });
+
+        function search_table(value) {
+            $("#admin_table tr").each(function () {
+                var found = "false";
+                $(this).each(function () {
+                    if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+                        found = "true";
+                    }
+                });
+                if (found == "true") {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
         }
     });
+
 </script>
 
 @yield('scripts')

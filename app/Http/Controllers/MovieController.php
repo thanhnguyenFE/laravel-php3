@@ -101,7 +101,7 @@ class MovieController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'slug' => 'required|string|max:255',
+            'slug' => 'string|max:255',
             'description' => 'required|string|max:255',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'duration' => 'required|integer|min:0',

@@ -12,11 +12,13 @@
                         @csrf
                         <div class="mb-3">
                             <label class="form-label" for="basic-default-title">Name Room</label>
-                            <input type="text" class="form-control" id="basic-default-title" placeholder="John Doe" name="name" value="{{$room->name}}"/>
+                            <input type="text" class="form-control" id="basic-default-title" placeholder="John Doe"
+                                   name="name" value="{{$room->name}}"/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="basic-default-slug">Slug</label>
-                            <input type="text" class="form-control" id="basic-default-slug" placeholder="john-doe" name="slug" value="{{$room->slug}}"/>
+                            <input type="text" class="form-control" id="basic-default-slug" placeholder="john-doe"
+                                   name="slug" value="{{$room->slug}}"/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="basic-default-description">Description</label>
@@ -32,7 +34,8 @@
                         <div class="mb-3">
                             <label class="form-label d-block" for="basic-default-status">Status</label>
                             <div class="form-check form-check-inline">
-                                <input type="checkbox" class="form-check-input" id="status" value="1" name="status" @if($room->status==1) checked @endif/>
+                                <input type="checkbox" class="form-check-input" id="status" value="1" name="status"
+                                       @if($room->status==1) checked @endif/>
                                 <label class="form-check-label" for="status">Active</label>
                             </div>
                         </div>

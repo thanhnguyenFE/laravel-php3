@@ -6,9 +6,25 @@
             <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tickets /</span> List</h4>
             <a type="button" class="btn btn-outline-primary" href="{{route('tickets.create')}}">Create</a>
         </div>
+        <div class="p-4 bg-white">
+            <label for="search" class="sr-only">Search</label>
+            <div class="relative mt-1">
+                <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                    </svg>
+                </div>
+                <input type="text"
+                       name="search" id="search"
+                       class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                       placeholder="Search for items">
+            </div>
+        </div>
         <div class="card">
             <div class="table-responsive text-nowrap">
-                <table class="table">
+                <table class="table" id="admin_table">
                     <thead>
                     <tr>
                         <th>Code</th>
@@ -32,7 +48,7 @@
                                 {{$ticket->schedule->movie->title}}
                             </td>
                             <td>
-                                {{$ticket->schedule->date}}
+                                {{\App\Helpers\formatDate($ticket->schedule->date)}}
                             </td>
                             <td>
                                 @if ($ticket->payment_status == 1)
@@ -168,10 +184,10 @@
                     },
                     success: function (data) {
                         var body = $('#tbody-ticket-detail');
-                        console.log(data.schedule.movie.thumbnail);
+                        console.log(data);
                         body.empty();
                         var content = `
-                        <tr><td>User</td> <td><img class="img-fluid rounded-full me-3 w-[50px] h-[50px] mb-2" src="${data.user.avatar ? '/storage/' + data.user.avatar : '/img/avatars/1.png'}"> ${data.user.name}</td></tr>
+                        <tr><td>User</td> <td><img class="img-fluid rounded-full me-3 w-[50px] h-[50px] mb-2" src="${data.user.avatar ? '/storage/avatars/' + data.user.avatar : '/img/avatars/1.png'}"> ${data.user.name}</td></tr>
 
                         <tr><td>Phone</td> <td>${data.user.phone}</td></tr>
                         <tr><td>Movie</td> <td>${data.schedule.movie.title}</td></tr>
@@ -182,7 +198,7 @@
 
                         <tr><td>Status</td>
                         <td>`;
-                        content += data.status == 1 ? "<i class='bx bx-check-circle check icon text-success'></i>" : "<i class='bx bx-x-circle cross icon text-danger'></i>";
+                        content += data.payment_status == 1 ? "<i class='bx bx-check-circle check icon text-success'></i>" : "<i class='bx bx-x-circle cross icon text-danger'></i>";
                         content += `</td></tr>`;
                         body.html(content);
                     },
